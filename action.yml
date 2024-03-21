@@ -1,0 +1,84 @@
+name: Slack Build Notification
+description: Sends a notification to Slack with the build status and changelog
+
+inputs:
+  platform:
+    description: 'The platform of the build'
+    required: true
+  webhook-url:
+    description: 'Slack webhook URL'
+    required: true
+  build-name:
+    description: 'The build name'
+    required: true
+  build-number:
+    description: 'The build number'
+    required: true
+  changelog:
+    description: 'The changelog'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Send Notification to Slack
+      uses: 8398a7/action-slack@v3
+      with:
+        status: custom
+        fields: author,workflow,workflowRun
+        custom_payload: |
+          {
+            blocks: [{
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": `${{ env.PREFIX }} The *${{ inputs.platform }}* build triggered by _${{ github.actor }}_ was a ${{ job.status }}.\nApp Version: *${{ inputs.build-name }}*\nBuild Number: *${{ inputs.build-number }}*`
+              },
+              "accessory": {
+                "type": "image",
+                "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Android_logo_2019.png",
+                "alt_text": `${{ inputs.platform }} Logo`
+              }
+            },
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": `Workflow: ${process.env.AS_WORKFLOW}`
+              },
+              "accessory": {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "Open",
+                  "emoji": true
+                },
+                "value": "workflow-run",
+                "url": `${process.env.AS_WORKFLOW_RUN}`,
+                "action_id": "workflow-run"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "context",
+              "elements": [
+                {
+                  "type": "mrkdwn",
+                  "text": `${{ inputs.changelog }}`
+                }
+              ]
+            },
+            {
+              "type": "divider"
+            }]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ inputs.webhook-url }}
+        PREFIX: ${{ job.status == 'success' && ':white_check_mark:' || (job.status == 'failure' && ':x:' || ':warning:') }}
+      if: always()
+
+branding:
+  icon: bell
+  color: blue

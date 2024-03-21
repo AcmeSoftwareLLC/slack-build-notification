@@ -36,7 +36,7 @@ runs:
               },
               "accessory": {
                 "type": "image",
-                "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Android_logo_2019.png",
+                "image_url": `https://raw.githubusercontent.com/AcmeSoftwareLLC/slack-build-notification/main/logos/${{ inputs.platform }}.png`,
                 "alt_text": `${{ inputs.platform }} Logo`
               }
             },

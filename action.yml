@@ -23,6 +23,10 @@ runs:
   steps:
     - name: Send Notification to Slack
       uses: 8398a7/action-slack@v3
+      if: always()
+      env:
+        SLACK_WEBHOOK_URL: ${{ inputs.webhook-url }}
+        PREFIX: ${{ job.status == 'success' && ':white_check_mark:' || (job.status == 'failure' && ':x:' || ':warning:') }}
       with:
         status: custom
         fields: author,workflow,workflowRun
@@ -74,10 +78,6 @@ runs:
               "type": "divider"
             }]
           }
-      env:
-        SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
-        PREFIX: ${{ job.status == 'success' && ':white_check_mark:' || (job.status == 'failure' && ':x:' || ':warning:') }}
-      if: always()
 
 branding:
   icon: bell

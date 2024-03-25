@@ -75,7 +75,7 @@ runs:
             }]
           }
       env:
-        SLACK_WEBHOOK_URL: ${{ inputs.webhook-url }}
+        SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
         PREFIX: ${{ job.status == 'success' && ':white_check_mark:' || (job.status == 'failure' && ':x:' || ':warning:') }}
       if: always()
 

@@ -25,7 +25,7 @@ runs:
       uses: 8398a7/action-slack@v3
       if: always()
       env:
-        SLACK_WEBHOOK_URL: ${{ inputs.webhook-url }}
+        SLACK_WEBHOOK_URL: "${{ inputs.webhook-url }}"
         PREFIX: ${{ job.status == 'success' && ':white_check_mark:' || (job.status == 'failure' && ':x:' || ':warning:') }}
       with:
         status: custom

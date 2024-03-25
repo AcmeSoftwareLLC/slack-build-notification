@@ -58,7 +58,7 @@ runs:
                   "emoji": true
                 },
                 "value": "workflow-run",
-                "url": "${process.env.AS_WORKFLOW_RUN}",
+                "url": "https://acmesoftware.com",
                 "action_id": "workflow-run"
               }
             },

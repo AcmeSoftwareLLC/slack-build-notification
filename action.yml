@@ -50,17 +50,6 @@ runs:
                 "type": "mrkdwn",
                 "text": `Workflow: ${process.env.AS_WORKFLOW}`
               },
-              "accessory": {
-                "type": "button",
-                "text": {
-                  "type": "plain_text",
-                  "text": "Open",
-                  "emoji": true
-                },
-                "value": "workflow-run",
-                "url": "https://acmesoftware.com",
-                "action_id": "workflow-run"
-              }
             },
             {
               "type": "divider"

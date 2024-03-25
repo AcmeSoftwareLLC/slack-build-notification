@@ -26,4 +26,7 @@ jobs:
           webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
           build-name: 1.0.0
           build-number: 20231005
-          changelog: test changelog
+          changelog: |
+            ## Changelog
+            - Added new feature
+            - Fixed bug

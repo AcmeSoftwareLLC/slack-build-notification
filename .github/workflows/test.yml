@@ -27,5 +27,5 @@ jobs:
               "text": "Foo bar baz"
             }
         env:
-          SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()

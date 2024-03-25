@@ -48,7 +48,7 @@ runs:
               "type": "section",
               "text": {
                 "type": "mrkdwn",
-                "text": `Workflow: ${process.env.AS_WORKFLOW}``
+                "text": `Workflow: ${process.env.AS_WORKFLOW}`
               },
               "accessory": {
                 "type": "button",

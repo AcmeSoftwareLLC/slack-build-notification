@@ -19,14 +19,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Send Build Notification
-        uses: ./
+      - uses: 8398a7/action-slack@v3
         with:
-          platform: ${{ matrix.platform }}
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          build-name: 1.0.0
-          build-number: 20231005
-          changelog: |
-            ## Changelog
-            - Added new feature
-            - Fixed bug
+          status: custom
+          custom_payload: |
+            {
+              "text": "Foo bar baz"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()

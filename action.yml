@@ -45,6 +45,24 @@ runs:
               }
             },
             {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "Workflow: ${{ process.env.AS_WORKFLOW }}"
+              },
+              "accessory": {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "Open",
+                  "emoji": true
+                },
+                "value": "workflow-run",
+                "url": "${{ process.env.AS_WORKFLOW_RUN }}",
+                "action_id": "workflow-run"
+              }
+            },
+            {
               "type": "divider"
             },
             {

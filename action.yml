@@ -24,6 +24,7 @@ runs:
     - uses: 8398a7/action-slack@v3
       with:
         status: custom
+        fields: author,workflow,workflowRun
         custom_payload: |
           {
             "text": "Foo bar baz",

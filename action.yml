@@ -21,63 +21,73 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Send Notification to Slack
-      uses: 8398a7/action-slack@v3
-      if: always()
-      env:
-        SLACK_WEBHOOK_URL: "${{ inputs.webhook-url }}"
-        PREFIX: ${{ job.status == 'success' && ':white_check_mark:' || (job.status == 'failure' && ':x:' || ':warning:') }}
+    - uses: 8398a7/action-slack@v3
       with:
         status: custom
-        fields: author,workflow,workflowRun
         custom_payload: |
           {
-            blocks: [{
-              "type": "section",
-              "text": {
-                "type": "mrkdwn",
-                "text": `${{ env.PREFIX }} The *${{ inputs.platform }}* build triggered by _${{ github.actor }}_ was a ${{ job.status }}.\nApp Version: *${{ inputs.build-name }}*\nBuild Number: *${{ inputs.build-number }}*`
-              },
-              "accessory": {
-                "type": "image",
-                "image_url": "https://raw.githubusercontent.com/AcmeSoftwareLLC/slack-build-notification/main/logos/${{ inputs.platform }}.png",
-                "alt_text": `${{ inputs.platform }} Logo`
-              }
-            },
-            {
-              "type": "section",
-              "text": {
-                "type": "mrkdwn",
-                "text": `Workflow: ${process.env.AS_WORKFLOW}`
-              },
-              "accessory": {
-                "type": "button",
-                "text": {
-                  "type": "plain_text",
-                  "text": "Open",
-                  "emoji": true
-                },
-                "value": "workflow-run",
-                "url": `${process.env.AS_WORKFLOW_RUN}`,
-                "action_id": "workflow-run"
-              }
-            },
-            {
-              "type": "divider"
-            },
-            {
-              "type": "context",
-              "elements": [
-                {
-                  "type": "mrkdwn",
-                  "text": `${{ inputs.changelog }}`
-                }
-              ]
-            },
-            {
-              "type": "divider"
-            }]
+            "text": "Foo bar baz",
           }
+      env: 
+        SLACK_WEBHOOK_URL: ${{ inputs.webhook-url }}
+      if: always()
+    # - name: Send Notification to Slack
+    #   uses: 8398a7/action-slack@v3
+    #   if: always()
+    #   env:
+    #     SLACK_WEBHOOK_URL: "${{ inputs.webhook-url }}"
+    #     PREFIX: ${{ job.status == 'success' && ':white_check_mark:' || (job.status == 'failure' && ':x:' || ':warning:') }}
+    #   with:
+    #     status: custom
+    #     fields: author,workflow,workflowRun
+    #     custom_payload: |
+    #       {
+    #         blocks: [{
+    #           "type": "section",
+    #           "text": {
+    #             "type": "mrkdwn",
+    #             "text": `${{ env.PREFIX }} The *${{ inputs.platform }}* build triggered by _${{ github.actor }}_ was a ${{ job.status }}.\nApp Version: *${{ inputs.build-name }}*\nBuild Number: *${{ inputs.build-number }}*`
+    #           },
+    #           "accessory": {
+    #             "type": "image",
+    #             "image_url": "https://raw.githubusercontent.com/AcmeSoftwareLLC/slack-build-notification/main/logos/${{ inputs.platform }}.png",
+    #             "alt_text": `${{ inputs.platform }} Logo`
+    #           }
+    #         },
+    #         {
+    #           "type": "section",
+    #           "text": {
+    #             "type": "mrkdwn",
+    #             "text": `Workflow: ${process.env.AS_WORKFLOW}`
+    #           },
+    #           "accessory": {
+    #             "type": "button",
+    #             "text": {
+    #               "type": "plain_text",
+    #               "text": "Open",
+    #               "emoji": true
+    #             },
+    #             "value": "workflow-run",
+    #             "url": `${process.env.AS_WORKFLOW_RUN}`,
+    #             "action_id": "workflow-run"
+    #           }
+    #         },
+    #         {
+    #           "type": "divider"
+    #         },
+    #         {
+    #           "type": "context",
+    #           "elements": [
+    #             {
+    #               "type": "mrkdwn",
+    #               "text": `${{ inputs.changelog }}`
+    #             }
+    #           ]
+    #         },
+    #         {
+    #           "type": "divider"
+    #         }]
+    #       }
 
 branding:
   icon: bell

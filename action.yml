@@ -21,6 +21,14 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Preprocessing Changelog
+      id: changelog
+      run: |
+        changelog="${{ inputs.changelog }}"
+        escaped_changelog=$(echo "$changelog" | sed 's/`/\\`/g')
+        echo "markdown=$escaped_changelog" >> $GITHUB_OUTPUT
+      shell: bash
+
     - name: Send Notification to Slack
       uses: 8398a7/action-slack@v3
       if: always()
@@ -59,7 +67,7 @@ runs:
               "elements": [
                 {
                   "type": "mrkdwn",
-                  "text": `${{ inputs.changelog }}`
+                  "text": `${{ steps.changelog.outputs.markdown }}`
                 }
               ]
             },
